@@ -38,6 +38,10 @@ jobs:
           mkdir -p website
           cp -rf packages/gephi-lite/build/* website/
 
+      - name: Remove source maps
+        run: |
+          find website -name "*.map" -type f -delete
+
       - name: Create tar archive
         run: |
           tar -czf gephi-lite-v${{ env.PACKAGE_VERSION }}.tar.gz website
