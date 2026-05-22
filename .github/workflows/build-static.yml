@@ -8,6 +8,9 @@ on:
 
 permissions:
   contents: write
+  id-token: write
+  attestations: write
+  artifact-metadata: write
 
 jobs:
   build:
@@ -55,6 +58,11 @@ jobs:
           name: gephi-lite-v${{ env.PACKAGE_VERSION }}
           path: gephi-lite-v${{ env.PACKAGE_VERSION }}.tar.gz
           if-no-files-found: error
+
+      - name: Generate artifact attestation
+        uses: actions/attest@v4
+        with:
+          subject-path: gephi-lite-v${{ env.PACKAGE_VERSION }}.tar.gz
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
